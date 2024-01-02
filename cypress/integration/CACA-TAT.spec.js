@@ -205,17 +205,27 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.success strong').should('not.be.visible')
       })
 
-      it('faz uma requisição HTTP', function() {
+      it.only('faz uma requisição HTTP', function() {
         cy.request('GET', 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html').then((response) => {
-            console.log(response)
-
             expect(response.status).to.equal(200)
             expect(response.statusText).to.equal('OK')
             expect(response.body).include('CAC TAT')
         })
       })
 
-      it.only('show me the cat', function() {
+
+      it.only('faz uma requisição HTTP 2', function() {
+        cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+            .should(function(response) {    
+            const { status, statusText, body } = response
+            
+            expect(status).to.equal(200)
+            expect(statusText).to.equal('OK')
+            expect(body).to.include('CAC TAT')
+        })
+      })
+
+      it('show me the cat', function() {
         cy.get('#cat')
             .should('not.be.visible')
             .invoke('show')
