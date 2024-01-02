@@ -26,6 +26,8 @@
 
 
 Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function() {
+    const text = Cypress._.repeat('123456789', 20)
+
     cy.get('#firstName').type('Alexandre').should('have.value', 'Alexandre')
     cy.get('#lastName').type('Coimbra').should('have.value', 'Coimbra')
     cy.get('#email').type('alexcoim@email.com').should('have.value', 'alexcoim@email.com')
@@ -33,7 +35,7 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function() {
     cy.get('#product').select('cursos').should('have.value', 'cursos')
     cy.get('input[value="elogio"]').check()
 
-    cy.get('#open-text-area').type('Great Scott!').should('have.value', 'Great Scott!')
+    cy.get('#open-text-area').invoke('val', text).should('have.value', text)
 
     cy.contains('button', 'Enviar').click()
 
